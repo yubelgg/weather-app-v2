@@ -4,7 +4,6 @@ import {Country, City, State} from "country-state-city";
 import Select from "react-select";
 import {useRouter} from "next/navigation";
 import { GlobeIcon } from "@heroicons/react/solid";
-import {stat} from "fs";
 
 type countrySelection = {
     value: {
@@ -21,7 +20,6 @@ type statesSelection = {
         name: string;
         isoCode: string;
         countryCode: string;
-        stateCode: string;
         latitude: string;
         longitude: string;
     };
@@ -53,7 +51,6 @@ function CityLocation() {
     const [country, setCountry] = useState<countrySelection>(null);
     const [states, setStates] = useState<statesSelection>(null);
     const [city, setCity] = useState<citySelection>(null);
-
     const router = useRouter();
     const handleCountrySelection = (selectedCountry: countrySelection) => {
         setCountry(selectedCountry);
@@ -67,6 +64,9 @@ function CityLocation() {
     }
     const handleCitySelection = (selectedCity: citySelection) => {
         setCity(selectedCity);
+        router.push(
+            `/location/${selectedCity?.value.name}/${selectedCity?.value.latitude}/${selectedCity?.value.longitude}`
+        );
     }
 
     return (
