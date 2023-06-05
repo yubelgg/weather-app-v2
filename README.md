@@ -20,7 +20,7 @@ npm install country-state-city
 npm install --save react-select
 ```
 
-### StepZen Integration
+### [StepZen Integration](https://stepzen.com/docs/quick-start/install-and-setup)
 
 Create a StepZen account. You will be provided with a username and admin key for login (subsititution for API key)
 
@@ -31,4 +31,9 @@ npm install -g stepzen
 stepzen login
 stepzen import curl "[LINK]"
 stepzen start
+```
+
+### [Apollo Client](https://www.apollographql.com/docs/react/ge%20%20%60)
+```
+npm install @apollo/client graphql
 ```

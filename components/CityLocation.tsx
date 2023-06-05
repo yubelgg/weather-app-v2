@@ -141,4 +141,4 @@ function CityLocation() {
     )
 }
 
-export default CityLocation
+export default CityLocation;
