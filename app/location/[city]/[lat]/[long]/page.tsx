@@ -31,6 +31,7 @@ async function WeatherReport({params: {city, lat, long}}: Props) {
             <div className="pb-5">
                <h3 className="text-xl font-bold">Today</h3>
                 <Card>
+                    {city}
                     <p>Updated lasted {" "}</p>
                     {new Date(result.current_weather.time).toLocaleString()} ({result.timezone})
                 </Card>
@@ -42,6 +43,21 @@ async function WeatherReport({params: {city, lat, long}}: Props) {
             </div>
 
             <div>
+                <InfoCard
+                    title="UV Index"
+                    metric={`${result.current_weather.temperature}`}>
+                </InfoCard>
+
+                <InfoCard
+                    title="Temperature"
+                    metric={`${result.current_weather.temperature}`}>
+                </InfoCard>
+
+                <InfoCard
+                    title="Temperature"
+                    metric={`${result.current_weather.temperature}`}>
+                </InfoCard>
+
                 <InfoCard
                     title="Temperature"
                     metric={`${result.current_weather.temperature}`}>

@@ -39,8 +39,8 @@ type citySelection = {
 
 const countryOptions = Country.getAllCountries().map((country) => ({
     value: {
-        latitude: country.latitude,
-        longitude: country.longitude,
+        latitude: country.latitude!,
+        longitude: country.longitude!,
         isoCode: country.isoCode,
     },
     label: country.name,
@@ -101,8 +101,8 @@ function CityLocation() {
                                     name: state.name,
                                     isoCode: state.isoCode,
                                     countryCode: state.countryCode,
-                                    latitude: state.latitude,
-                                    longitude: state.longitude,
+                                    latitude: state.latitude!,
+                                    longitude: state.longitude!,
                                 },
                                 label: state.name,
                             }))
@@ -127,8 +127,8 @@ function CityLocation() {
                                     name: city.name,
                                     countryCode: city.countryCode,
                                     stateCode: city.stateCode,
-                                    latitude: city.latitude,
-                                    longitude: city.longitude,
+                                    latitude: city.latitude!,
+                                    longitude: city.longitude!,
                                 },
                                 label: city.name,
                             }))
