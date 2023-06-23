@@ -23,6 +23,35 @@ async function WeatherReport({params: {city, lat, long}}: Props) {
         }
     })
 
+    const weatherCondition = () => {
+        let num = result.daily.weathercode[0]
+        if (num === 0) {
+            return <div>Clear Sky</div>
+        } else if (num === 1 || num === 2 || num === 3) {
+            return <div>Mainly Clear,partly cloudy, and overcast</div>
+        } else if (num === 45 || num === 48) {
+            return <div>Fog</div>
+        } else if (num === 51 || num === 53 || num === 55) {
+            return <div>Drizzle</div>
+        } else if (num === 56 || num === 57) {
+            return <div>Freezing Drizzle</div>
+        } else if (num === 61 || num === 63 || num === 65) {
+            return <div>Rain</div>
+        } else if (num === 66 || num === 67) {
+            return <div>Freezing Rain</div>
+        } else if (num === 71 || num === 73 || num === 75) {
+            return <div>Snow Fall</div>
+        } else if (num === 77) {
+            return <div>Snow Grains</div>
+        } else if (num === 80 || num === 81 || num === 82) {
+            return <div>Rain Showers</div>
+        } else if (num === 85 || num === 86) {
+            return <div>Snow Showers</div>
+        } else if (num === 96) {
+            return <div>Thunderstorm</div>
+        }
+    }
+
     const result: Root = data.myQuery;
     console.log(result)
 
@@ -31,7 +60,7 @@ async function WeatherReport({params: {city, lat, long}}: Props) {
             <div className="pb-5">
                <h3 className="text-xl font-bold">Today</h3>
                 <Card>
-                    {city}
+                    <p className="font-bold text-xl">{decodeURI(city)}</p>
                     <p>Updated lasted {" "}</p>
                     {new Date(result.current_weather.time).toLocaleString()} ({result.timezone})
                 </Card>
@@ -45,22 +74,29 @@ async function WeatherReport({params: {city, lat, long}}: Props) {
             <div>
                 <InfoCard
                     title="UV Index"
-                    metric={`${result.current_weather.temperature}`}>
+                    metric={`${result.daily.uv_index_max[0].toFixed(0)}`}>
                 </InfoCard>
 
                 <InfoCard
-                    title="Temperature"
-                    metric={`${result.current_weather.temperature}`}>
+                    title="Wind Status"
+                    metric={`${result.current_weather.windspeed}
+                             ${result.current_weather.winddirection}`}>
                 </InfoCard>
 
                 <InfoCard
-                    title="Temperature"
-                    metric={`${result.current_weather.temperature}`}>
+                    title="Sunrise Sunset"
+                    metric={`${result.daily.sunrise[0]}
+                             ${result.daily.sunset[0]}`}>
                 </InfoCard>
 
                 <InfoCard
-                    title="Temperature"
-                    metric={`${result.current_weather.temperature}`}>
+                    title="Humidity"
+                    metric={`${result.hourly.relativehumidity_2m[0]}`}>
+                </InfoCard>
+
+                <InfoCard
+                    title="Weather Condition"
+                    metric={weatherCondition()}>
                 </InfoCard>
             </div>
         </div>
