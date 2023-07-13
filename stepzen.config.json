@@ -1,0 +1,4 @@
+{
+  "endpoint": "api/joking-abalone",
+  "root": "stepzen/curl"
+}

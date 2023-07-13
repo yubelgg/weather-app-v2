@@ -3,6 +3,9 @@ import weatherQueries from "@/graphql/queries/weatherQueries";
 import {Card} from "@tremor/react";
 import CallCard from "@/components/CallCard";
 import InfoCard from "@/components/InfoCard";
+import simpleData from "@/app/api/chatgpt/simpleData";
+import pathBase from "@/app/api/chatgpt/pathBase";
+import CityLocation from "@/components/CityLocation";
 
 type Props = {
     params: {
@@ -11,6 +14,7 @@ type Props = {
         long: string;
     };
 };
+
 async function WeatherReport({params: {city, lat, long}}: Props) {
     const client = getClient();
     const { data } = await client.query({
@@ -22,6 +26,24 @@ async function WeatherReport({params: {city, lat, long}}: Props) {
             timezone: "EST",
         }
     })
+
+    const result: Root = data.myQuery;
+    console.log(result)
+
+    const newData = simpleData(result, city); 
+
+    const res = await fetch(`${pathBase()}/api/chatgpt`, {
+        method: "POST",
+        headers: { 
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            WeatherReport: newData
+        })
+    })
+
+    const GPTdata = await res.json();
+    const { content } = GPTdata;
 
     const weatherCondition = () => {
         let num = result.daily.weathercode[0]
@@ -52,9 +74,6 @@ async function WeatherReport({params: {city, lat, long}}: Props) {
         }
     }
 
-    const result: Root = data.myQuery;
-    console.log(result)
-
     return (
         <div className="p-5">
             <div className="pb-5">
@@ -63,24 +82,29 @@ async function WeatherReport({params: {city, lat, long}}: Props) {
                     <p className="font-bold text-xl">{decodeURI(city)}</p>
                     <p>Updated lasted {" "}</p>
                     {new Date(result.current_weather.time).toLocaleString()} ({result.timezone})
+                    <CityLocation></CityLocation>
                 </Card>
             </div>
 
             <div>
                 {/** call card **/}
-                <CallCard msg="GPT"></CallCard>
+                <CallCard msg={content}/>
             </div>
 
-            <div>
+            <div className="grid grid-cols-2 gap-5 m-2">
                 <InfoCard
                     title="UV Index"
                     metric={`${result.daily.uv_index_max[0].toFixed(0)}`}>
                 </InfoCard>
 
                 <InfoCard
-                    title="Wind Status"
-                    metric={`${result.current_weather.windspeed}
-                             ${result.current_weather.winddirection}`}>
+                    title="Wind Speed"
+                    metric={`${result.current_weather.windspeed}`}>
+                </InfoCard>
+
+                <InfoCard
+                    title="Wind Direction"
+                    metric={`${result.current_weather.winddirection}`}>
                 </InfoCard>
 
                 <InfoCard
