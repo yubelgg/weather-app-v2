@@ -1,5 +1,4 @@
 import { Card, AreaChart, Title } from "@tremor/react";
-import { data } from "autoprefixer";
 
 type Props = {
     result: Root;

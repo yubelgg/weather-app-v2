@@ -11,6 +11,7 @@ yarn dev
 # or
 pnpm dev
 ```
+
 ## Development Progress
 
 Created a component that selects country, state, and city with dropdowns selectors
@@ -33,7 +34,9 @@ stepzen import curl "[LINK]"
 stepzen start
 ```
 
-### [Apollo Client](https://www.apollographql.com/docs/react/ge%20%20%60)
+### [Apollo Client](https://www.apollographql.com/docs/react/ge%20%20%60) and [Tremor](https://www.tremor.so/docs/getting-started/installation)
+
 ```
 npm install @apollo/client graphql
+npm install @tremor/react
 ```
