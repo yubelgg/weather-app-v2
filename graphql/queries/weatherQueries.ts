@@ -5,7 +5,7 @@ const weatherQueries= gql`
        $current_weather: String
        $daily: String = "weathercode,sunrise,sunset,temperature_2m_max,temperature_2m_min,uv_index_max"
        $forecast_days: String
-       $hourly: String = "precipitation,precipitation_probability,rain,relativehumidity_2m,showers,snowfall,relativehumidity_2m,uv_index,weathercode"
+       $hourly: String = "precipitation,precipitation_probability,rain,relativehumidity_2m,showers,snowfall,relativehumidity_2m,uv_index,weathercode,temperature_2m"
        $latitude: String!
        $longitude: String!
        $models: String

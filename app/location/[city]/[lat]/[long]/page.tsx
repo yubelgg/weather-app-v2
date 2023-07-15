@@ -6,6 +6,7 @@ import InfoCard from "@/components/InfoCard";
 import simpleData from "@/app/api/chatgpt/simpleData";
 import pathBase from "@/app/api/chatgpt/pathBase";
 import CityLocation from "@/components/CityLocation";
+import WeatherChart from "@/components/WeatherChart";
 
 type Props = {
     params: {
@@ -75,7 +76,7 @@ async function WeatherReport({params: {city, lat, long}}: Props) {
     }
 
     return (
-        <div className="p-5">
+        <div className="p-5 flex flex-row min-h-screen">
             <div className="pb-5">
                <h3 className="text-xl font-bold">Today</h3>
                 <Card>
@@ -87,41 +88,51 @@ async function WeatherReport({params: {city, lat, long}}: Props) {
             </div>
 
             <div>
-                {/** call card **/}
-                <CallCard msg={content}/>
-            </div>
+                <div className="grid grid-cols-2 gap-5">
+                    {/** call card **/}
+                    <CallCard msg={content}/>
 
-            <div className="grid grid-cols-2 gap-5 m-2">
-                <InfoCard
-                    title="UV Index"
-                    metric={`${result.daily.uv_index_max[0].toFixed(0)}`}>
-                </InfoCard>
+                    <WeatherChart result={result}></WeatherChart>
+                </div>
 
-                <InfoCard
-                    title="Wind Speed"
-                    metric={`${result.current_weather.windspeed}`}>
-                </InfoCard>
+                <div className="grid grid-cols-2 gap-5 m-2">
+                    <InfoCard
+                        title="Min Temperature"
+                        metric={`${result.daily.temperature_2m_min[0]}`}>
+                    </InfoCard>
 
-                <InfoCard
-                    title="Wind Direction"
-                    metric={`${result.current_weather.winddirection}`}>
-                </InfoCard>
+                    <InfoCard
+                        title="Max Temperature"
+                        metric={`${result.daily.temperature_2m_max[0]}`}>
+                    </InfoCard>
 
-                <InfoCard
-                    title="Sunrise Sunset"
-                    metric={`${result.daily.sunrise[0]}
-                             ${result.daily.sunset[0]}`}>
-                </InfoCard>
 
-                <InfoCard
-                    title="Humidity"
-                    metric={`${result.hourly.relativehumidity_2m[0]}`}>
-                </InfoCard>
+                    <InfoCard
+                        title="Wind Speed"
+                        metric={`${result.current_weather.windspeed}`}>
+                    </InfoCard>
 
-                <InfoCard
-                    title="Weather Condition"
-                    metric={weatherCondition()}>
-                </InfoCard>
+                    <InfoCard
+                        title="Wind Direction"
+                        metric={`${result.current_weather.winddirection}`}>
+                    </InfoCard>
+
+                    <InfoCard
+                        title="Sunrise Sunset"
+                        metric={`${result.daily.sunrise[0]}
+                                 ${result.daily.sunset[0]}`}>
+                    </InfoCard>
+
+                    <InfoCard
+                        title="Humidity"
+                        metric={`${result.hourly.relativehumidity_2m[0]}`}>
+                    </InfoCard>
+
+                    <InfoCard
+                        title="Weather Condition"
+                        metric={weatherCondition()}>
+                    </InfoCard>
+                </div>
             </div>
         </div>
     )
