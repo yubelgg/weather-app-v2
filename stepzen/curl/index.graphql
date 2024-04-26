@@ -1,55 +1,60 @@
 type CurrentWeather {
   is_day: Int
-  temperature: Float
-  time: String
-  weathercode: Int
-  winddirection: Int
-  windspeed: Int
+  temperature_2m: Float
+  time: DateTime
+  weather_code: Int
+  wind_direction_10m: Int
+  wind_speed_10m: Float
 }
+
+type CurrentUnits {
+  interval: String
+  is_day: String
+  rain: String
+  temperature_2m: String
+  time: String
+  weather_code: String
+  wind_direction_10m: String
+  wind_speed_10m: String
+}
+
 type Daily {
-  sunrise: [String]
-  sunset: [String]
-  temperature_2m_max: [Float]
-  temperature_2m_min: [Float]
+  daylight_duration: [Float]
+  sunrise: [DateTime]
+  sunset: [DateTime]
   time: [Date]
   uv_index_max: [Float]
-  weathercode: [Int]
+  weather_code: [Int]
 }
+
 type DailyUnits {
+  daylight_duration: String
   sunrise: String
   sunset: String
-  temperature_2m_max: String
-  temperature_2m_min: String
   time: String
   uv_index_max: String
-  weathercode: String
+  weather_code: String
 }
+
 type Hourly {
-  precipitation: [Float]
-  precipitation_probability: [Int]
   rain: [Float]
-  relativehumidity_2m: [Int]
-  showers: [Float]
-  snowfall: [Int]
   temperature_2m: [Float]
-  time: [String]
+  time: [DateTime]
   uv_index: [Float]
-  weathercode: [Int]
+  weather_code: [Int]
 }
+
 type HourlyUnits {
-  precipitation: String
-  precipitation_probability: String
   rain: String
-  relativehumidity_2m: String
-  showers: String
-  snowfall: String
   temperature_2m: String
   time: String
   uv_index: String
-  weathercode: String
+  weather_code: String
 }
+
 type Root {
-  current_weather: CurrentWeather
+  current: Current
+  current_units: CurrentUnits
   daily: Daily
   daily_units: DailyUnits
   elevation: Int
@@ -65,16 +70,12 @@ type Root {
 
 type Query {
   myQuery(
-    current_weather: String
+    current: String
     daily: String
-    forecast_days: String
     hourly: String
     latitude: String
     longitude: String
-    models: String
-    precipitation_unit: String
     temperature_unit: String
-    timezone: String
-    windspeed_unit: String
+    wind_speed_unit: String
   ): Root @rest(endpoint: "https://api.open-meteo.com/v1/forecast")
 }
